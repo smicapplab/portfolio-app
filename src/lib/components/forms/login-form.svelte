@@ -77,7 +77,7 @@
 		</Form.Field>
 		<Form.Button disabled={isLoading} class="text-white bg-orange-700">
 			{#if isLoading}
-				<Icons.LoaderPinwheel class="animate-spin"/>
+				<Icons.loaderPinwheel class="animate-spin"/>
 			{:else}
 				Sign In with Email
 			{/if}

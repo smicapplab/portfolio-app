@@ -54,8 +54,8 @@ export const Icons = {
 	google: Google,
 	apple: Apple,
     facebook: Facebook,
-	Hamburger,
+	hamburger: Hamburger,
 	eye: Eye,
 	eyeOff: EyeOff,
-	LoaderPinwheel: LoaderPinwheel
+	loaderPinwheel: LoaderPinwheel
 };

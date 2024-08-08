@@ -103,7 +103,7 @@
 		</p>
 		<Form.Button disabled={isLoading}>
 			{#if isLoading}
-				<Icons.LoaderPinwheel class="animate-spin" />
+				<Icons.loaderPinwheel class="animate-spin" />
 			{:else}
 				Sign Up with Email
 			{/if}
