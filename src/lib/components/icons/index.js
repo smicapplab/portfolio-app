@@ -23,7 +23,7 @@ import User from "lucide-svelte/icons/user";
 import X from "lucide-svelte/icons/x";
 import Github from "./github.svelte";
 import Google from "./google.svelte";
-import { Apple, Eye, EyeOff, Facebook } from "lucide-svelte";
+import { Apple, Eye, EyeOff, Facebook, LoaderPinwheel } from "lucide-svelte";
 import Hamburger from "./hamburger.svelte";
 
 export const Icons = {
@@ -57,4 +57,5 @@ export const Icons = {
 	Hamburger,
 	eye: Eye,
 	eyeOff: EyeOff,
+	LoaderPinwheel: LoaderPinwheel
 };

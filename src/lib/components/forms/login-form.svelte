@@ -10,7 +10,6 @@
 	import Input from '../ui/input/input.svelte';
 	import Button from '../ui/button/button.svelte';
 	import { Icons } from '../icons';
-	import { Eye } from 'lucide-svelte';
 	import { goto } from '$app/navigation';
 
 	let className = undefined;
@@ -78,7 +77,7 @@
 		</Form.Field>
 		<Form.Button disabled={isLoading} class="text-white bg-orange-700">
 			{#if isLoading}
-				<i class="fa-solid fa-spinner animate-spin"></i>
+				<Icons.LoaderPinwheel class="animate-spin"/>
 			{:else}
 				Sign In with Email
 			{/if}

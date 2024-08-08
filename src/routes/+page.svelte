@@ -1,6 +1,7 @@
 <script>
 	import { assets } from '$app/paths';
 	import LoginForm from '$lib/components/forms/login-form.svelte';
+	import RegistrationForm from '$lib/components/forms/registration-form.svelte';
 	import Divider from '$lib/components/ui/divider/divider.svelte';
 
 	let isLogin = true;
@@ -44,12 +45,10 @@
 					<h1 class="text-2xl font-semibold tracking-tight">Sign Up</h1>
 					<p class="text-sm text-muted-foreground">Create your portfolio account</p>
 				</div>
-
-				Registration Here TO DO
-
+				<RegistrationForm/>
 				<Divider />
 				<div class="flex items-center justify-center space-x-2 text-center">
-					<span class="text-gray-600">Already have a Koredor account?</span>
+					<span class="text-gray-600">Already have an account?</span>
 					<button
 						on:click={toggleForm}
 						class="text-blue-500 underline bg-transparent border-none hover:text-blue-700 focus:outline-none"
