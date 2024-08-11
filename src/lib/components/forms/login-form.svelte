@@ -12,7 +12,7 @@
 	import { Icons } from '../icons';
 	import { goto } from '$app/navigation';
 
-	let className = undefined;
+	let className = "";
 	export { className as class };
 	export let isLoading = false;
 	export let showPassword = false;
@@ -38,7 +38,7 @@
 </script>
 
 <div class={cn('grid gap-6', className)} {...$$restProps}>
-	<form method="POST" class="grid gap-2" use:enhance action="?/login">
+	<form method="POST" class="grid gap-2" use:enhance action="?/signInWithEmail">
 		<Form.Field {form} name="email">
 			<Form.Control let:attrs>
 				<Label>Email</Label>

@@ -4,10 +4,17 @@
 	import AppleSign from './apple-sign.svelte';
 	import GithubSign from './github-sign.svelte';
 
+	let className = '';
+	export { className as class };
+
 	export let isLoading = false;
 </script>
 
-<FacebookSign {isLoading} />
-<AppleSign {isLoading} />
-<GoogleSign {isLoading} />
-<GithubSign {isLoading} />
+<div class={className}>
+	<form method="POST" class="flex flex-col space-y-4">
+		<FacebookSign {isLoading} />
+		<!-- <AppleSign {isLoading} /> -->
+		<GoogleSign {isLoading} />
+		<GithubSign {isLoading} />
+	</form>
+</div>

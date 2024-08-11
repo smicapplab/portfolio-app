@@ -6,8 +6,9 @@
 
 <Button
 	variant="outline"
-	type="button"
+	type="submit"
 	disabled={isLoading}
+	formaction="?/loginWithProvider&provider=github"
 	class="font-bold text-white bg-gray-900 rounded hover:bg-black hover:text-gray-200"
 >
 	<Icons.gitHub class="w-5 h-5" />
