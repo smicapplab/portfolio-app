@@ -36,3 +36,10 @@ npm run build
 You can preview the production build with `npm run preview`.
 
 > To deploy your app, you may need to install an [adapter](https://kit.svelte.dev/docs/adapters) for your target environment.
+
+
+## Vercel Deployment
+
+This project is deployed on Vercel. You can view the live demo at:
+
+[Portfolio App](https://portfolio-app-ebon-eight.vercel.app/)
