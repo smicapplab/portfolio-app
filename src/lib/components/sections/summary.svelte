@@ -1,7 +1,14 @@
 <script>
 	import { assets } from '$app/paths';
-
+	import { onMount } from 'svelte';
+	import { cubicOut, quartIn } from 'svelte/easing';
+	import { fly } from 'svelte/transition';
 	const lines = ['Beanca', '', 'Espirito Santo', '', 'Torrefranca'];
+
+	let show = false;
+	onMount(() => {
+		show = true;
+	});
 </script>
 
 <section class="flex justify-center py-10">
@@ -30,8 +37,10 @@
 			</div>
 			<div
 				class="flex items-center justify-center h-auto pt-5 text-4xl font-bold text-center lg:text-left lg:text-5xl"
-			>
-				<img src="{assets}/images/bea.jpg" alt="Beanca" class="w-1/2 rounded-full lg:w-2/3" />
+			>	
+				{#if show }
+					<img in:fly={{ duration: 800, easing: quartIn }} src="{assets}/images/bea.jpg" alt="Beanca" class="w-1/2 rounded-full lg:w-2/3" />					
+				{/if}
 			</div>
 		</div>
 	</div>
