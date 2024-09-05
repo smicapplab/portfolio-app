@@ -1,5 +1,10 @@
 <script>
 	import { theme } from '$lib/stores/theme';
+	import { onMount } from 'svelte';
+	import { cubicInOut, cubicOut } from 'svelte/easing';
+	import { fly } from 'svelte/transition';
+
+	let show = false;
 
 	const experiences = [
 		{
@@ -20,9 +25,15 @@
 			]
 		}
 	];
+
+	onMount(() => {
+		show = true;
+	})
 </script>
 
-<section
+{#if show}
+<section 
+	in:fly={{ x: 300, y: 100, duration: 800, easing: cubicOut }}
 	class="flex items-center justify-center py-10 {$theme === 'light'
 		? 'bg-base-200'
 		: 'bg-pink-200'}"
@@ -55,3 +66,4 @@
 		</div>
 	</div>
 </section>
+{/if}
