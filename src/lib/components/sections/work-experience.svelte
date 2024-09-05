@@ -25,19 +25,19 @@
 <section
 	class="flex items-center justify-center py-10 {$theme === 'light'
 		? 'bg-base-200'
-		: 'bg-gray-900'}"
+		: 'bg-pink-200'}"
 >
 	<div class="container p-4 mx-auto">
 		<div class="grid grid-cols-1 gap-5 lg:grid-cols-3">
 			<div
-				class="justify-center h-auto pt-5 text-4xl font-bold text-center lg:text-left lg:text-5xl"
+				class="justify-center h-auto pt-5 text-4xl font-bold text-center lg:text-left lg:text-5xl {$theme === 'light' ? "text-white" : "text-black"}"
 			>
 				WORK EXPERIENCE
 			</div>
 			<div class="lg:col-span-2">
 				{#each experiences as experience}
 					<div
-						class="m-5 rounded-lg border p-5 {$theme === 'light' ? 'border-black' : 'border-ehite'}"
+						class="p-5 m-5 border rounded-lg experience border-black {$theme === 'light' ? 'bg-white' : 'bg-black'}"
 					>
 						<h2 class="pb-5 text-xl font-bold lg:text-2xl">
 							{experience.company} - {experience.dates}
