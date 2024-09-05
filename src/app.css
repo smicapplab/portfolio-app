@@ -1,0 +1,29 @@
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
+
+html {
+	scroll-behavior: smooth;
+}
+
+body {
+	font-family: Noto Sans, sans-serif;
+	font-size: 16px;
+	line-height: 1.6;
+	color: #333;
+	background-color: #fff;
+	letter-spacing: 0.5px;
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+	-webkit-box-shadow: 0 0 0 30px white inset !important;
+	box-shadow: 0 0 0 30px white inset !important;
+	-webkit-text-fill-color: #000 !important;
+	caret-color: auto !important;
+}
