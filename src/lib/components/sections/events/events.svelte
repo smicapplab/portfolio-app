@@ -82,8 +82,8 @@
 				entries.forEach((entry) => {
 					if (entry.isIntersecting) {
 						show = true;
-						if(imagesLoaded) {
-							animateCards();							
+						if (imagesLoaded) {
+							animateCards();
 						}
 						observer.unobserve(entry.target); // Stop observing once triggered
 					}
@@ -154,28 +154,34 @@
 				engage customers, which expanded market reach through social media as buyers shared their
 				merchandise hauls and tagged our brand.
 			</span>
-			<div class="grid grid-cols-1 gap-5 mt-10 md:grid-cols-2 xl:grid-cols-3">
-				{#each visibleCards as event, i (event.name)}
-					<div
-						class="w-auto overflow-hidden shadow-xl card card-compact bg-base-100"
-						in:fly={{ x: 100, duration: 500, easing: cubicOut }}
-					>
-						<button
-							class="w-full h-full text-left focus:outline-none focus:ring-2 focus:ring-blue-300"
-							on:click={() => openModal(event.poster)}
-							on:keydown={(e) => handleKeydown(e, event.poster)}
+			{#if imagesLoaded && show}
+				<div class="grid grid-cols-1 gap-5 mt-10 md:grid-cols-2 xl:grid-cols-3">
+					{#each visibleCards as event, i (event.name)}
+						<div
+							class="w-auto overflow-hidden shadow-xl card card-compact bg-base-100"
+							in:fly={{ x: 100, duration: 500, easing: cubicOut }}
 						>
-							<figure class="w-full h-60">
-								<img src={event.poster} alt={event.name} class="object-cover w-full h-full" />
-							</figure>
-							<div class="text-white card-body">
-								<h2 class="card-title">{event.name}</h2>
-								<p>{event.date} at {event.venue}</p>
-							</div>
-						</button>
-					</div>
-				{/each}
-			</div>
+							<button
+								class="w-full h-full text-left focus:outline-none focus:ring-2 focus:ring-blue-300"
+								on:click={() => openModal(event.poster)}
+								on:keydown={(e) => handleKeydown(e, event.poster)}
+							>
+								<figure class="w-full h-60">
+									<img src={event.poster} alt={event.name} class="object-cover w-full h-full" />
+								</figure>
+								<div class="text-white card-body">
+									<h2 class="card-title">{event.name}</h2>
+									<p>{event.date} at {event.venue}</p>
+								</div>
+							</button>
+						</div>
+					{/each}
+				</div>
+			{:else}
+				<div class="flex h-[calc(100vh-200px)] items-center justify-center lg:col-span-2">
+					<span class="loading loading-spinner loading-lg"></span>
+				</div>
+			{/if}
 		</div>
 	</div>
 </section>

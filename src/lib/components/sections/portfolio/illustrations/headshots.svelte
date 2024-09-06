@@ -41,9 +41,9 @@
 					if (entry.isIntersecting) {
 						show = true;
 						if (imagesLoaded) {
-							animateCards();							
+							animateCards();
 						}
-						
+
 						observer.unobserve(entry.target); // Stop observing once triggered
 					}
 				});
@@ -120,24 +120,30 @@
 		>
 			Headshots
 		</div>
-		<div class="lg:col-span-2">
-			<div class="grid grid-cols-1 gap-5 mt-10 md:grid-cols-2 xl:grid-cols-3">
-				{#each visibleCards as photo, i (i)}
-					<div
-						class="h-[300px] w-full overflow-hidden rounded-xl shadow-lg"
-						in:fly={{ x: 100, duration: 500, easing: cubicOut }}
-					>
-						<button
-							class="w-full h-full focus:outline-none focus:ring-2 focus:ring-blue-300"
-							on:click={() => openModal(photo)}
-							on:keydown={(e) => handleKeydown(e, photo)}
+		{#if imagesLoaded && show}
+			<div class="lg:col-span-2">
+				<div class="grid grid-cols-1 gap-5 mt-10 md:grid-cols-2 xl:grid-cols-3">
+					{#each visibleCards as photo, i (i)}
+						<div
+							class="h-[300px] w-full overflow-hidden rounded-xl shadow-lg"
+							in:fly={{ x: 100, duration: 500, easing: cubicOut }}
 						>
-							<img src={photo} alt="photo-{i}" class="object-cover object-center w-full h-full" />
-						</button>
-					</div>
-				{/each}
+							<button
+								class="w-full h-full focus:outline-none focus:ring-2 focus:ring-blue-300"
+								on:click={() => openModal(photo)}
+								on:keydown={(e) => handleKeydown(e, photo)}
+							>
+								<img src={photo} alt="photo-{i}" class="object-cover object-center w-full h-full" />
+							</button>
+						</div>
+					{/each}
+				</div>
 			</div>
-		</div>
+		{:else}
+			<div class="flex h-[calc(100vh-200px)] items-center justify-center lg:col-span-2">
+				<span class="loading loading-spinner loading-lg"></span>
+			</div>
+		{/if}
 	</div>
 </section>
 
