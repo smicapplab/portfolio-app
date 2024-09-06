@@ -14,6 +14,7 @@
 	 * @type {null}
 	 */
 	let selectedImage = null;
+	let imagesLoaded = false
 
 	/**
 	 * @type {(any | string)[]}
@@ -25,18 +26,41 @@
 	 */
 	let visibleCards = [];
 
+	function preloadImages() {
+		let loadedCount = 0;
+		const totalImages = graphics.length;
+
+		graphics.forEach((src) => {
+			const img = new Image();
+			img.onload = () => {
+				loadedCount++;
+				if (loadedCount === totalImages) {
+					imagesLoaded = true;
+					if (show) {
+						animateCards();
+					}
+				}
+			};
+			img.src = src;
+		});
+	}
+
 	// Trigger animation when section is in view
 	onMount(() => {
 		for (let i = 1; i < 13; i++) {
 			graphics.push(`${assets}/images/portfolio/graphics/${i}.png`);
 		}
 
+		preloadImages();
+
 		const observer = new IntersectionObserver(
 			(entries) => {
 				entries.forEach((entry) => {
 					if (entry.isIntersecting) {
 						show = true;
-						animateCards();
+						if (imagesLoaded) {
+							animateCards();
+						}
 						observer.unobserve(entry.target); // Stop observing once triggered
 					}
 				});

@@ -10,6 +10,7 @@
 	 * @type {Element}
 	 */
 	let sectionSkillsRef;
+	let imagesLoaded = false;
 
 	const proficientIn = [
 		{ name: 'Adobe After Effects', logo: `${assets}/images/logos/after-effects.png` },
@@ -24,14 +25,38 @@
 	 */
 	let visibleCards = [];
 
+	function preloadImages() {
+		let loadedCount = 0;
+		const totalImages = proficientIn.length;
+
+		proficientIn.forEach((skill) => {
+			const img = new Image();
+			img.onload = () => {
+				loadedCount++;
+				if (loadedCount === totalImages) {
+					imagesLoaded = true;
+					if (show) {
+						animateCards();
+					}
+				}
+			};
+			img.src = skill.logo;
+		});
+	}
+
+
 	// Trigger animation when section is in view
 	onMount(() => {
+		preloadImages();
+		
 		const observer = new IntersectionObserver(
 			(entries) => {
 				entries.forEach((entry) => {
 					if (entry.isIntersecting) {
 						show = true;
-						animateCards();
+						if (imagesLoaded) {
+							animateCards();
+						}
 						observer.unobserve(entry.target); // Stop observing once triggered
 					}
 				});

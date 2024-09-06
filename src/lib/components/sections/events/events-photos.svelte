@@ -43,7 +43,9 @@
 				entries.forEach((entry) => {
 					if (entry.isIntersecting) {
 						show = true;
-						animateCards();
+						if (imagesLoaded) {
+							animateCards();
+						}
 						observer.unobserve(entry.target); // Stop observing once triggered
 					}
 				});
