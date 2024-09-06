@@ -34,11 +34,11 @@
 							skills to deliver effective visual solutions and engaging customer experiences.
 						</div>
 					</div>
-					<div class="overflow">
+					<div class="w-full overflow">
 						<div
 							class="flex items-center justify-center w-full py-5 space-x-4 text-base font-normal text-center line"
 						>
-							<a class="btn btn-ghost" href="/" target="blank" aria-label="link-linkedin"><Icons.linkedin /></a>
+							<a class="btn btn-ghost" href="https://www.linkedin.com/in/bea-torrefranca-006ba12a1" target="blank" aria-label="link-linkedin"><Icons.linkedin /></a>
 							<a class="btn btn-ghost" href="https://www.facebook.com/LunarKurapika" target="blank" aria-label="link-fb"><Icons.facebook /></a>
 							<a class="btn btn-ghost" href="https://www.instagram.com/beanca_franca/" aria-label="link-instagram"><Icons.instagram /></a>
 							<a class="btn btn-ghost" href="mailto:torrefrancabeanca@gmail.com" aria-label="link-email"><Icons.email /></a>
@@ -73,7 +73,6 @@
 	.line {
 		display: inline-block;
 		margin: 0.2rem;
-		text-shadow: 2px 0 10px hsl(0 0% 0% / 20%);
 		animation: reveal 0.5s cubic-bezier(0.77, 0, 0.175, 1) 0.5s forwards;
 		transform: translateY(100%);
 	}

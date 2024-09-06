@@ -1,0 +1,142 @@
+<script>
+	import { theme } from '$lib/stores/theme';
+	import { cubicOut } from 'svelte/easing';
+	import { fly } from 'svelte/transition';
+	import { onMount } from 'svelte';
+	import { assets } from '$app/paths';
+	import { Icons } from '$lib/components/icons';
+
+	let show = false;
+	/**
+	 * @type {Element}
+	 */
+	let sectionRef;
+	/**
+	 * @type {null}
+	 */
+	let selectedImage = null;
+
+	/**
+	 * @type {(any | string)[]}
+	 */
+	const illustrations = [];
+
+	/**
+	 * @type {string | any[]}
+	 */
+	let visibleCards = [];
+
+	// Trigger animation when section is in view
+	onMount(() => {
+		for (let i = 1; i < 6; i++) {
+			illustrations.push(`${assets}/images/portfolio/illustrations/${i}.png`);
+		}
+
+		const observer = new IntersectionObserver(
+			(entries) => {
+				entries.forEach((entry) => {
+					if (entry.isIntersecting) {
+						show = true;
+						animateCards();
+						observer.unobserve(entry.target); // Stop observing once triggered
+					}
+				});
+			},
+			{
+				root: null,
+				threshold: 0.5
+			}
+		);
+
+		observer.observe(sectionRef);
+	});
+
+	function animateCards() {
+		let delay = 0;
+		const interval = setInterval(() => {
+			if (visibleCards.length < illustrations.length) {
+				visibleCards = [...visibleCards, illustrations[visibleCards.length]];
+			} else {
+				clearInterval(interval);
+			}
+		}, 150);
+	}
+
+	/**
+	 * @param {any} image
+	 */
+	function openModal(image) {
+		selectedImage = image;
+	}
+
+	function closeModal() {
+		selectedImage = null;
+	}
+
+	/**
+	 * @param {{ key: string; }} event
+	 * @param {any} image
+	 */
+	function handleKeydown(event, image) {
+		if (event.key === 'Enter' || event.key === ' ') {
+			openModal(image);
+		}
+	}
+</script>
+
+<section
+	bind:this={sectionRef}
+	class="justify-center py-10 {$theme === 'light' ? 'bg-white text-black' : 'bg-black text-white'}"
+>
+	<div class="container p-4 mx-auto">
+		<div
+			class="justify-center h-auto py-5 text-4xl font-bold text-center section-label lg:text-left lg:text-5xl"
+		>
+            Illustrations
+		</div>
+		<div class="lg:col-span-2">
+			<div class="grid grid-cols-1 gap-5 mt-10 md:grid-cols-2 xl:grid-cols-3">
+				{#each visibleCards as photo, i (i)}
+					<div
+						class="h-[300px] w-full overflow-hidden rounded-xl shadow-lg"
+						in:fly={{ x: 100, duration: 500, easing: cubicOut }}
+					>
+						<button
+							class="w-full h-full focus:outline-none focus:ring-2 focus:ring-blue-300"
+							on:click={() => openModal(photo)}
+							on:keydown={(e) => handleKeydown(e, photo)}
+						>
+							<img src={photo} alt="photo-{i}" class="object-cover object-center w-full h-full" />
+						</button>
+					</div>
+				{/each}
+			</div>
+		</div>
+	</div>
+</section>
+
+{#if selectedImage}
+	<button
+		class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-75 z-100"
+		on:click={closeModal}
+		on:keydown={(e) => e.key === 'Escape' && closeModal()}
+		tabindex="-1"
+	>
+		<div class="relative max-h-[90vh] max-w-4xl overflow-auto">
+			<img src={selectedImage} alt={selectedImage} class="w-full h-auto" />
+			<button
+				class="absolute p-2 text-white bg-black bg-opacity-50 rounded-full right-4 top-4"
+				on:click={closeModal}
+				aria-label="Close modal"
+			>
+				<Icons.x />
+			</button>
+		</div>
+	</button>
+{/if}
+
+<style>
+	section {
+		min-height: 50vh;
+	}
+</style>
