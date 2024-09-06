@@ -6,6 +6,8 @@ import {
     Sun,
     Moon,
     Menu,
+	Phone,
+	X
 } from 'lucide-svelte';
 
 export const Icons = {
@@ -15,5 +17,7 @@ export const Icons = {
 	email: Mail,
     sun: Sun,
 	moon: Moon,
-    menu: Menu
+    menu: Menu,
+	phone: Phone,
+	x: X
 };

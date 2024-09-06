@@ -12,9 +12,9 @@
 			dates: 'June 2024 - Aug 2024',
 			role: 'Student Intern',
 			description: [
-				'Created two TikTok videos per day',
-				'Contributed to a 70% increase in video and profile views for the TikTok account',
-				'Created two Facebook and Instagram content per day'
+				'Designed daily social media content for Facebook and Instagram, producing two TikTok videos per day',
+				'Increased TikTok profile and video views by 70% after taking over content management',
+				'Collaborated seamlessly with the marketing team to meet daily graphic design needs'
 			]
 		},
 		{
@@ -23,7 +23,7 @@
 			role: 'Student',
 			description: [
 				'Assisted with food service during the Grade 6 Food Fair',
-				'Led creative direction for an annual Entrepreneur Fair booth'
+				'Led the creative direction for an Entrepreneur Fair booth, managing all aspects of design and execution'
 			]
 		}
 	];
@@ -37,16 +37,13 @@
 	<section
 		in:fly={{ x: 300, duration: 800, easing: cubicOut }}
 		class="flex items-center justify-center py-10 {$theme === 'light'
-			? 'bg-base-200'
-			: 'bg-pink-200'}"
+			? 'bg-gray-100'
+			: 'bg-pink-800'}"
 	>
 		<div class="container p-4 mx-auto">
 			<div class="grid grid-cols-1 gap-5 lg:grid-cols-3">
 				<div
-					class="section-label h-auto justify-center pt-5 text-center text-4xl font-bold lg:text-left lg:text-5xl {$theme ===
-					'light'
-						? 'text-white'
-						: 'text-black'}"
+					class="justify-center h-auto pt-5 text-4xl font-bold text-center section-label lg:text-left lg:text-5xl"
 				>
 					WORK EXPERIENCE
 				</div>
