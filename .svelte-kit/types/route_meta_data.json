@@ -1,6 +1,8 @@
 {
 	"/": [],
 	"/events": [],
-	"/guestbook": [],
+	"/guestbook": [
+		"src/routes/guestbook/+page.server.js"
+	],
 	"/portfolio": []
 }

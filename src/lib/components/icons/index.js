@@ -7,7 +7,9 @@ import {
     Moon,
     Menu,
 	Phone,
-	X
+	X,
+	IdCard,
+	Send
 } from 'lucide-svelte';
 
 export const Icons = {
@@ -19,5 +21,7 @@ export const Icons = {
 	moon: Moon,
     menu: Menu,
 	phone: Phone,
-	x: X
+	x: X,
+	idCard: IdCard,
+	send: Send,
 };

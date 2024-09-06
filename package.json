@@ -34,6 +34,8 @@
 	},
 	"type": "module",
 	"dependencies": {
-		"lucide-svelte": "^0.438.0"
+		"@sendgrid/mail": "^8.1.3",
+		"lucide-svelte": "^0.438.0",
+		"sveltekit-superforms": "^2.17.0"
 	}
 }

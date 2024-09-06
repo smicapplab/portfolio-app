@@ -16,6 +16,9 @@
 		class="fixed text-white shadow-lg l top-30 menu menu-horizontal z-100 rounded-box bg-base-200"
 	>
 		<li>
+			<!-- svelte-ignore a11y-click-events-have-key-events -->
+			<!-- svelte-ignore a11y-no-static-element-interactions -->
+			<!-- svelte-ignore a11y-missing-attribute -->
 			<a
 				aria-label="graphics"
 				class="btn {activeTab === 0 ? 'btn-secondary ' : 'btn-ghost'}"
@@ -23,12 +26,18 @@
 			>
 		</li>
 		<li>
+			<!-- svelte-ignore a11y-click-events-have-key-events -->
+			<!-- svelte-ignore a11y-no-static-element-interactions -->
+			<!-- svelte-ignore a11y-missing-attribute -->
 			<a
 				class="btn {activeTab === 1 ? 'btn-secondary ' : 'btn-ghost'}"
 				on:click={() => toggleMenu(1)}>Illustrations</a
 			>
 		</li>
 		<li>
+			<!-- svelte-ignore a11y-click-events-have-key-events -->
+			<!-- svelte-ignore a11y-no-static-element-interactions -->
+			<!-- svelte-ignore a11y-missing-attribute -->
 			<a
 				class="btn {activeTab === 2 ? 'btn-secondary ' : 'btn-ghost'}"
 				on:click={() => toggleMenu(2)}>Internship Works</a

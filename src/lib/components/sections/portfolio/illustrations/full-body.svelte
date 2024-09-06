@@ -4,7 +4,6 @@
 	import { fly } from 'svelte/transition';
 	import { onMount } from 'svelte';
 	import { assets } from '$app/paths';
-	import { Icons } from '$lib/components/icons';
 
 	let show = false;
 	/**
@@ -92,7 +91,7 @@
 		<div
 			class="justify-center h-auto py-5 text-4xl font-bold text-center section-label lg:text-left lg:text-5xl"
 		>
-            Full Body
+			Full Body
 		</div>
 		<div class="lg:col-span-2">
 			<div class="grid grid-cols-1 gap-5 mt-10 md:grid-cols-2 xl:grid-cols-3">
@@ -116,23 +115,19 @@
 </section>
 
 {#if selectedImage}
-	<button
+	<!-- svelte-ignore a11y-no-static-element-interactions -->
+	<div
 		class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-75 z-100"
 		on:click={closeModal}
 		on:keydown={(e) => e.key === 'Escape' && closeModal()}
 		tabindex="-1"
 	>
-		<div class="relative max-h-[90vh] max-w-4xl overflow-auto">
-			<img src={selectedImage} alt={selectedImage} class="w-full h-auto" />
-			<button
-				class="absolute p-2 text-white bg-black bg-opacity-50 rounded-full right-4 top-4"
-				on:click={closeModal}
-				aria-label="Close modal"
-			>
-				<Icons.x />
-			</button>
+		<!-- svelte-ignore a11y-click-events-have-key-events -->
+		<!-- svelte-ignore a11y-no-static-element-interactions -->
+		<div class="relative flex h-full max-h-[90vh] max-w-[90vw] items-center justify-center">
+			<img src={selectedImage} alt={selectedImage} class="object-contain max-w-full max-h-full" />
 		</div>
-	</button>
+	</div>
 {/if}
 
 <style>

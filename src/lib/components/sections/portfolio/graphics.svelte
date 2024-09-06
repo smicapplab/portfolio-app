@@ -4,7 +4,6 @@
 	import { fly } from 'svelte/transition';
 	import { onMount } from 'svelte';
 	import { assets } from '$app/paths';
-	import { Icons } from '../../icons';
 
 	let show = false;
 	/**
@@ -124,13 +123,6 @@
 	>
 		<div class="relative max-h-[90vh] max-w-4xl overflow-auto">
 			<img src={selectedImage} alt={selectedImage} class="w-full h-auto" />
-			<button
-				class="absolute p-2 text-white bg-black bg-opacity-50 rounded-full right-4 top-4"
-				on:click={closeModal}
-				aria-label="Close modal"
-			>
-				<Icons.x />
-			</button>
 		</div>
 	</button>
 {/if}

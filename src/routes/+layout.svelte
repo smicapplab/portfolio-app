@@ -4,6 +4,7 @@
 	import Navbar from '$lib/components/ui/layout/navbar/navbar.svelte';
 	import { browser } from '$app/environment';
 	import { theme } from '$lib/stores/theme';
+	import Toast from '$lib/components/ui/toast/toast.svelte';
 
 	onMount(async () => {
 		if (browser) {
@@ -25,6 +26,7 @@
 
 <div class="h-screen {$theme === 'light' ? 'bg-white text-black' : 'bg-black text-white'} leading-normal">
 	<Navbar />
+	<Toast />
 	<div class="pt-10 lg:pt-20">
 		<slot></slot>
 	</div>

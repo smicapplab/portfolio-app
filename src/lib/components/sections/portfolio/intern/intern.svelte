@@ -6,8 +6,7 @@
 	import { fly } from 'svelte/transition';
 	import { onMount } from 'svelte';
 	import { assets } from '$app/paths';
-	import { Icons } from '$lib/components/icons';
-
+	
 	let show = false;
 	let sectionRef;
 	let selectedMedia = null;
@@ -61,7 +60,7 @@
 	}
 
 	function closeModal() {
-		console.log(">>>>>> Close <<<<<<")
+		console.log('>>>>>> Close <<<<<<');
 		selectedMedia = null;
 	}
 
@@ -103,7 +102,8 @@
 							on:keydown={(e) => handleKeydown(e, media)}
 						>
 							{#if isVideo(media)}
-								<video src={media} class="object-cover object-center w-full h-full">
+								<video src={media} class="object-cover object-center w-full h-full" controls>
+									<track kind="captions" />
 									Your browser does not support the video tag.
 								</video>
 							{:else}
@@ -118,38 +118,27 @@
 </section>
 
 {#if selectedMedia}
+	<!-- svelte-ignore a11y-no-static-element-interactions -->
 	<div
 		class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-75 z-100"
 		on:click={closeModal}
 		on:keydown={(e) => e.key === 'Escape' && closeModal()}
 		tabindex="-1"
 	>
-		<div 
-			class="relative h-full max-w-[90vw] max-h-[90vh] flex items-center justify-center"
+		<!-- svelte-ignore a11y-click-events-have-key-events -->
+		<!-- svelte-ignore a11y-no-static-element-interactions -->
+		<div
+			class="relative flex h-full max-h-[90vh] max-w-[90vw] items-center justify-center"
 			on:click={stopPropagation}
 		>
 			{#if isVideo(selectedMedia)}
-				<video 
-					src={selectedMedia} 
-					controls 
-					class="object-contain max-w-full max-h-full"
-				>
+				<!-- svelte-ignore a11y-media-has-caption -->
+				<video src={selectedMedia} controls class="object-contain max-w-full max-h-full">
 					Your browser does not support the video tag.
 				</video>
 			{:else}
-				<img 
-					src={selectedMedia} 
-					alt={selectedMedia} 
-					class="object-contain max-w-full max-h-full" 
-				/>
+				<img src={selectedMedia} alt={selectedMedia} class="object-contain max-w-full max-h-full" />
 			{/if}
-			<button
-				class="absolute p-2 text-white bg-black bg-opacity-50 rounded-full right-4 top-4"
-				on:click={closeModal}
-				aria-label="Close modal"
-			>
-				<Icons.x />
-			</button>
 		</div>
 	</div>
 {/if}
