@@ -14,6 +14,7 @@
 	 */
 	let sectionRef;
 	let selectedImage = null;
+	let imagesLoaded = false;
 
 	const events = [
 		{
@@ -53,8 +54,29 @@
 	 */
 	let visibleCards = [];
 
+	function preloadImages() {
+		let loadedCount = 0;
+		const totalImages = events.length;
+
+		events.forEach((event) => {
+			const img = new Image();
+			img.onload = () => {
+				loadedCount++;
+				if (loadedCount === totalImages) {
+					imagesLoaded = true;
+					if (show) {
+						animateCards();
+					}
+				}
+			};
+			img.src = event.poster;
+		});
+	}
+
 	// Trigger animation when section is in view
 	onMount(() => {
+		preloadImages();
+
 		const observer = new IntersectionObserver(
 			(entries) => {
 				entries.forEach((entry) => {

@@ -10,6 +10,7 @@
 	let show = false;
 	let sectionRef;
 	let selectedMedia = null;
+	let mediaLoaded = false;
 
 	const internships = [
 		`${assets}/images/portfolio/internship/1.png`,
@@ -25,6 +26,8 @@
 	let visibleCards = [];
 
 	onMount(() => {
+		preloadMedia(internships);
+
 		const observer = new IntersectionObserver(
 			(entries) => {
 				entries.forEach((entry) => {
@@ -43,6 +46,31 @@
 
 		observer.observe(sectionRef);
 	});
+
+	function preloadMedia(mediaList) {
+		let loadedCount = 0;
+		mediaList.forEach((src) => {
+			if (isVideo(src)) {
+				const video = document.createElement('video');
+				video.onloadeddata = handleLoaded;
+				video.src = src;
+			} else {
+				const img = new Image();
+				img.onload = handleLoaded;
+				img.src = src;
+			}
+		});
+
+		function handleLoaded() {
+			loadedCount++;
+			if (loadedCount === mediaList.length) {
+				mediaLoaded = true;
+				if (show) {
+					animateCards();
+				}
+			}
+		}
+	}
 
 	function animateCards() {
 		let delay = 0;

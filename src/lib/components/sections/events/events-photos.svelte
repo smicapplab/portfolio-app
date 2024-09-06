@@ -4,7 +4,6 @@
 	import { fly } from 'svelte/transition';
 	import { onMount } from 'svelte';
 	import { assets } from '$app/paths';
-	import { Icons } from '../../icons';
 
 	let show = false;
 	/**
@@ -15,6 +14,7 @@
 	 * @type {null}
 	 */
 	let selectedImage = null;
+	let imagesLoaded = false;
 
 	const eventPhotos = [
 		`${assets}/images/events/1.jpg`,
@@ -36,6 +36,8 @@
 
 	// Trigger animation when section is in view
 	onMount(() => {
+		preloadImages(eventPhotos);
+
 		const observer = new IntersectionObserver(
 			(entries) => {
 				entries.forEach((entry) => {
@@ -88,12 +90,23 @@
 	}
 
 	/**
-	 * @param {{ key: string; }} event
+	 * @param {any[]} images
 	 */
-	function handleModalKeydown(event) {
-		if (event.key === 'Escape') {
-			closeModal();
-		}
+	function preloadImages(images) {
+		let loadedCount = 0;
+		images.forEach((src) => {
+			const img = new Image();
+			img.onload = () => {
+				loadedCount++;
+				if (loadedCount === images.length) {
+					imagesLoaded = true;
+					if (show) {
+						animateCards();
+					}
+				}
+			};
+			img.src = src;
+		});
 	}
 </script>
 
