@@ -25,11 +25,15 @@
 	 */
 	let visibleCards = [];
 
+	let imagesLoaded = false;
+
 	// Trigger animation when section is in view
 	onMount(() => {
 		for (let i = 1; i < 4; i++) {
 			illustrations.push(`${assets}/images/portfolio/illustrations/headshots/${i}.png`);
 		}
+
+		preloadImages(illustrations);
 
 		const observer = new IntersectionObserver(
 			(entries) => {
@@ -80,6 +84,26 @@
 		if (event.key === 'Enter' || event.key === ' ') {
 			openModal(image);
 		}
+	}
+
+	/**
+	 * @param {any[]} images
+	 */
+	function preloadImages(images) {
+		let loadedCount = 0;
+		images.forEach((src) => {
+			const img = new Image();
+			img.onload = () => {
+				loadedCount++;
+				if (loadedCount === images.length) {
+					imagesLoaded = true;
+					if (show) {
+						animateCards();
+					}
+				}
+			};
+			img.src = src;
+		});
 	}
 </script>
 
