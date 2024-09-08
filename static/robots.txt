@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+
+# Optional: Add your sitemap here
+# Sitemap: https://portfolio-app-ebon-eight.vercel.app/sitemap.xml
