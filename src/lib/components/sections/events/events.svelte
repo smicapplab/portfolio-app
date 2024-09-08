@@ -187,16 +187,24 @@
 </section>
 
 {#if selectedImage}
-	<button
-		class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-75"
-		on:click={closeModal}
+	<!-- svelte-ignore a11y-no-static-element-interactions -->
+	<div
+		class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-75 z-100"
 		on:keydown={(e) => e.key === 'Escape' && closeModal()}
 		tabindex="-1"
 	>
-		<div class="relative max-h-[90vh] max-w-4xl overflow-auto">
-			<img src={selectedImage} alt={selectedImage} class="w-full h-auto" />
+		<!-- svelte-ignore a11y-click-events-have-key-events -->
+		<!-- svelte-ignore a11y-no-static-element-interactions -->
+		<div class="relative inline-block">
+			<img src={selectedImage} alt={selectedImage} class="object-contain max-w-full max-h-screen" />
+			<button
+				class="absolute text-white bg-black btn btn-circle right-4 top-4"
+				on:click={closeModal}
+			>
+				<Icons.x />
+			</button>
 		</div>
-	</button>
+	</div>
 {/if}
 
 <style>

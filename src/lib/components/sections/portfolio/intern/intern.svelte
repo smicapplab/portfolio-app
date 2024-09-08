@@ -6,6 +6,8 @@
 	import { fly } from 'svelte/transition';
 	import { onMount } from 'svelte';
 	import { assets } from '$app/paths';
+	import { isVideo } from '$lib/util';
+	import { Icons } from '$lib/components/icons';
 
 	let show = false;
 	let sectionRef;
@@ -99,10 +101,6 @@
 		}
 	}
 
-	function isVideo(file) {
-		return file.toLowerCase().endsWith('.mp4');
-	}
-
 	function stopPropagation(event) {
 		event.stopPropagation();
 	}
@@ -161,7 +159,6 @@
 	<!-- svelte-ignore a11y-no-static-element-interactions -->
 	<div
 		class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-75 z-100"
-		on:click={closeModal}
 		on:keydown={(e) => e.key === 'Escape' && closeModal()}
 		tabindex="-1"
 	>
@@ -173,11 +170,31 @@
 		>
 			{#if isVideo(selectedMedia)}
 				<!-- svelte-ignore a11y-media-has-caption -->
-				<video src={selectedMedia} controls class="object-contain max-w-full max-h-full">
-					Your browser does not support the video tag.
-				</video>
+				<div class="relative inline-block">
+					<video src={selectedMedia} controls class="object-contain max-w-full max-h-screen">
+						Your browser does not support the video tag.
+					</video>
+					<button
+						class="absolute text-white bg-black btn btn-circle right-4 top-4"
+						on:click={closeModal}
+					>
+						<Icons.x />
+					</button>
+				</div>
 			{:else}
-				<img src={selectedMedia} alt={selectedMedia} class="object-contain max-w-full max-h-full" />
+				<div class="relative inline-block">
+					<img
+						src={selectedMedia}
+						alt={selectedMedia}
+						class="object-contain max-w-full max-h-screen"
+					/>
+					<button
+						class="absolute text-white bg-black btn btn-circle right-4 top-4"
+						on:click={closeModal}
+					>
+						<Icons.x />
+					</button>
+				</div>
 			{/if}
 		</div>
 	</div>

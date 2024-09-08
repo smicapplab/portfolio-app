@@ -4,6 +4,7 @@
 	import Headshots from '$lib/components/sections/portfolio/illustrations/headshots.svelte';
 	import Illustrations from '$lib/components/sections/portfolio/illustrations/illustrations.svelte';
 	import Intern from '$lib/components/sections/portfolio/intern/intern.svelte';
+	import Tiktok from '$lib/components/sections/portfolio/intern/tiktok.svelte';
 
 	let activeTab = 0;
 	const toggleMenu = (/** @type {number} */ tab) => {
@@ -22,7 +23,7 @@
 			<a
 				aria-label="graphics"
 				class="btn {activeTab === 0 ? 'btn-secondary ' : 'btn-ghost'}"
-				on:click={() => toggleMenu(0)}>Graphics</a
+				on:click={() => toggleMenu(0)}>Graphics/Videos</a
 			>
 		</li>
 		<li>
@@ -58,4 +59,5 @@
 
 {#if activeTab === 2}
 	<Intern />
+	<Tiktok />
 {/if}

@@ -6,6 +6,7 @@
 	import ThemeSwitcher from '../../theme-switcher/theme-switcher.svelte';
 	import { theme } from '$lib/stores/theme';
 	import { Icons } from '$lib/components/icons';
+	import { assets } from '$app/paths';
 
 	let isScrolled = false;
 
@@ -14,6 +15,16 @@
 			isScrolled = window.scrollY > 0;
 		}
 	};
+
+	function downloadCV() {
+		// Assuming your CV is named "cv.pdf" and is in the "static" folder
+		const link = document.createElement('a');
+		link.href = `${assets}/Beanca-Torrefranca.pdf`; // This path is relative to your public directory
+		link.download = 'Beanca-Torrefranca.pdf'; // The name the file will have when downloaded
+		document.body.appendChild(link);
+		link.click();
+		document.body.removeChild(link);
+	}
 
 	onMount(() => {
 		if (browser) {
@@ -25,15 +36,18 @@
 	});
 </script>
 
-<div class="navbar fixed top-0 z-100 shadow-md {$theme === 'light' ? 'bg-white' : 'bg-black'} bg-opacity-70 backdrop-blur-sm">
+<div
+	class="navbar fixed top-0 z-100 shadow-md {$theme === 'light'
+		? 'bg-white'
+		: 'bg-black'} bg-opacity-70 backdrop-blur-sm"
+>
 	<div class="navbar-start">
 		<div class="dropdown">
 			<div tabindex="0" role="button" class="btn btn-ghost lg:hidden" aria-label="Toggle Menu">
 				<Icons.menu color={$theme === 'light' ? '#000' : '#fff'} />
 			</div>
 			<ul
-				class="dropdown-content z-[1] mt-3 menu menu-md rounded-box w-56 shadow {$theme ===
-				'light'
+				class="menu dropdown-content menu-md z-[1] mt-3 w-56 rounded-box shadow {$theme === 'light'
 					? 'bg-white'
 					: 'bg-black'}"
 			>
@@ -50,15 +64,18 @@
 						</a>
 					</li>
 				{/each}
+				<li>
+					<!-- svelte-ignore a11y-invalid-attribute -->
+					<a
+						href="#"
+						on:click|preventDefault={downloadCV}
+						class="btn btn-ghost flex w-full justify-start text-left {$theme === 'light'
+							? 'text-black'
+							: 'text-white'}">Download CV</a
+					>
+				</li>
 			</ul>
 		</div>
-		<a class="btn btn-link" href="/" aria-label="logo-link">
-			{#if isScrolled}
-				<!-- <Icons.koredorwhite /> -->
-			{:else}
-				<!-- <Icons.koredor /> -->
-			{/if}
-		</a>
 	</div>
 	<div class="hidden navbar-center lg:flex">
 		<ul class="px-1 menu menu-horizontal">
@@ -73,30 +90,17 @@
 					>
 				</li>
 			{/each}
+			<li>
+				<!-- svelte-ignore a11y-invalid-attribute -->
+				<a
+					href="#"
+					on:click|preventDefault={downloadCV}
+					class={$theme === 'light' ? 'text-black' : 'text-white'}>Download CV</a
+				>
+			</li>
 		</ul>
 	</div>
 	<div class="navbar-end">
 		<ThemeSwitcher />
 	</div>
 </div>
-
-<!-- <style>
-	ul.menu li details ul li a {
-		white-space: nowrap;
-		overflow: hidden;
-		text-overflow: ellipsis;
-		display: block;
-		height: 50px;
-		max-width: 100%;
-		line-height: 30px;
-	}
-	.menu.dropdown-content .p-2 li a {
-		white-space: nowrap;
-		overflow: hidden;
-		text-overflow: ellipsis;
-		display: block;
-		max-width: 100%;
-		height: 50px;
-		line-height: 40px;
-	}
-</style> -->

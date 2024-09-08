@@ -35,6 +35,8 @@
 	"type": "module",
 	"dependencies": {
 		"lucide-svelte": "^0.438.0",
+		"nodemailer": "^6.9.15",
+		"resend": "^4.0.0",
 		"sveltekit-superforms": "^2.17.0"
 	}
 }

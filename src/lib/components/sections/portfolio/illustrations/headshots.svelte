@@ -4,6 +4,7 @@
 	import { fly } from 'svelte/transition';
 	import { onMount } from 'svelte';
 	import { assets } from '$app/paths';
+	import { Icons } from '$lib/components/icons';
 
 	let show = false;
 	/**
@@ -151,14 +152,19 @@
 	<!-- svelte-ignore a11y-no-static-element-interactions -->
 	<div
 		class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-75 z-100"
-		on:click={closeModal}
 		on:keydown={(e) => e.key === 'Escape' && closeModal()}
 		tabindex="-1"
 	>
 		<!-- svelte-ignore a11y-click-events-have-key-events -->
 		<!-- svelte-ignore a11y-no-static-element-interactions -->
-		<div class="relative flex h-full max-h-[90vh] max-w-[90vw] items-center justify-center">
-			<img src={selectedImage} alt={selectedImage} class="object-contain max-w-full max-h-full" />
+		<div class="relative inline-block">
+			<img src={selectedImage} alt={selectedImage} class="object-contain max-w-full max-h-screen" />
+			<button
+				class="absolute text-white bg-black btn btn-circle right-4 top-4"
+				on:click={closeModal}
+			>
+				<Icons.x />
+			</button>
 		</div>
 	</div>
 {/if}

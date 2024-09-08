@@ -26,7 +26,7 @@
  * ```
  */
 declare module '$env/static/private' {
-	export const SENDGRID_API_KEY: string;
+	export const RESEND_API_KEY: string;
 	export const NVM_INC: string;
 	export const TERM_PROGRAM: string;
 	export const NODE: string;
@@ -82,10 +82,10 @@ declare module '$env/static/private' {
 	export const VSCODE_GIT_IPC_HANDLE: string;
 	export const NVM_BIN: string;
 	export const npm_config_user_agent: string;
-	export const VSCODE_GIT_ASKPASS_NODE: string;
-	export const GIT_ASKPASS: string;
 	export const INFOPATH: string;
 	export const HOMEBREW_CELLAR: string;
+	export const VSCODE_GIT_ASKPASS_NODE: string;
+	export const GIT_ASKPASS: string;
 	export const npm_node_execpath: string;
 	export const npm_config_prefix: string;
 	export const COLORTERM: string;
@@ -121,7 +121,7 @@ declare module '$env/static/public' {
  */
 declare module '$env/dynamic/private' {
 	export const env: {
-		SENDGRID_API_KEY: string;
+		RESEND_API_KEY: string;
 		NVM_INC: string;
 		TERM_PROGRAM: string;
 		NODE: string;
@@ -177,10 +177,10 @@ declare module '$env/dynamic/private' {
 		VSCODE_GIT_IPC_HANDLE: string;
 		NVM_BIN: string;
 		npm_config_user_agent: string;
-		VSCODE_GIT_ASKPASS_NODE: string;
-		GIT_ASKPASS: string;
 		INFOPATH: string;
 		HOMEBREW_CELLAR: string;
+		VSCODE_GIT_ASKPASS_NODE: string;
+		GIT_ASKPASS: string;
 		npm_node_execpath: string;
 		npm_config_prefix: string;
 		COLORTERM: string;

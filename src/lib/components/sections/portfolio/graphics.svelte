@@ -4,6 +4,8 @@
 	import { fly } from 'svelte/transition';
 	import { onMount } from 'svelte';
 	import { assets } from '$app/paths';
+	import { isVideo } from '$lib/util';
+	import { Icons } from '$lib/components/icons';
 
 	let show = false;
 	/**
@@ -13,8 +15,8 @@
 	/**
 	 * @type {null}
 	 */
-	let selectedImage = null;
-	let imagesLoaded = false;
+	let selectedMedia = null;
+	let mediaLoaded = false;
 
 	/**
 	 * @type {(any | string)[]}
@@ -26,23 +28,32 @@
 	 */
 	let visibleCards = [];
 
-	function preloadImages() {
+	/**
+	 * @param {any[]} mediaList
+	 */
+	function preloadMedia(mediaList) {
 		let loadedCount = 0;
-		const totalImages = graphics.length;
-
-		graphics.forEach((src) => {
-			const img = new Image();
-			img.onload = () => {
-				loadedCount++;
-				if (loadedCount === totalImages) {
-					imagesLoaded = true;
-					if (show) {
-						animateCards();
-					}
-				}
-			};
-			img.src = src;
+		mediaList.forEach((src) => {
+			if (isVideo(src)) {
+				const video = document.createElement('video');
+				video.onloadeddata = handleLoaded;
+				video.src = src;
+			} else {
+				const img = new Image();
+				img.onload = handleLoaded;
+				img.src = src;
+			}
 		});
+
+		function handleLoaded() {
+			loadedCount++;
+			if (loadedCount === mediaList.length) {
+				mediaLoaded = true;
+				if (show) {
+					animateCards();
+				}
+			}
+		}
 	}
 
 	// Trigger animation when section is in view
@@ -50,15 +61,16 @@
 		for (let i = 1; i < 13; i++) {
 			graphics.push(`${assets}/images/portfolio/graphics/${i}.png`);
 		}
+		graphics.push(`${assets}/images/portfolio/graphics/13.mp4`);
 
-		preloadImages();
+		preloadMedia(graphics);
 
 		const observer = new IntersectionObserver(
 			(entries) => {
 				entries.forEach((entry) => {
 					if (entry.isIntersecting) {
 						show = true;
-						if (imagesLoaded) {
+						if (mediaLoaded) {
 							animateCards();
 						}
 						observer.unobserve(entry.target); // Stop observing once triggered
@@ -75,7 +87,6 @@
 	});
 
 	function animateCards() {
-		let delay = 0;
 		const interval = setInterval(() => {
 			if (visibleCards.length < graphics.length) {
 				visibleCards = [...visibleCards, graphics[visibleCards.length]];
@@ -86,14 +97,14 @@
 	}
 
 	/**
-	 * @param {any} image
+	 * @param {any} media
 	 */
-	function openModal(image) {
-		selectedImage = image;
+	function openModal(media) {
+		selectedMedia = media;
 	}
 
 	function closeModal() {
-		selectedImage = null;
+		selectedMedia = null;
 	}
 
 	/**
@@ -105,6 +116,13 @@
 			openModal(image);
 		}
 	}
+
+	/**
+	 * @param {{ stopPropagation: () => void; }} event
+	 */
+	function stopPropagation(event) {
+		event.stopPropagation();
+	}
 </script>
 
 <section
@@ -115,47 +133,90 @@
 		<div
 			class="justify-center h-auto py-5 text-4xl font-bold text-center section-label lg:text-left lg:text-5xl"
 		>
-			Graphics
+			Graphics/Videos
 		</div>
 
-		{#if imagesLoaded && show}
+		{#if mediaLoaded && show}
 			<div class="lg:col-span-2">
 				<div class="grid grid-cols-1 gap-5 mt-10 md:grid-cols-2 xl:grid-cols-3">
-					{#each visibleCards as photo, i (i)}
+					{#each visibleCards as media, i (i)}
 						<div
 							class="h-[300px] w-full overflow-hidden rounded-xl shadow-lg"
 							in:fly={{ x: 100, duration: 500, easing: cubicOut }}
 						>
 							<button
 								class="w-full h-full focus:outline-none focus:ring-2 focus:ring-blue-300"
-								on:click={() => openModal(photo)}
-								on:keydown={(e) => handleKeydown(e, photo)}
+								on:click={() => openModal(media)}
+								on:keydown={(e) => handleKeydown(e, media)}
 							>
-								<img src={photo} alt="photo-{i}" class="object-cover object-center w-full h-full" />
+								{#if isVideo(media)}
+									<video src={media} class="object-cover object-center w-full h-full">
+										<track kind="captions" />
+										Your browser does not support the video tag.
+									</video>
+								{:else}
+									<img
+										src={media}
+										alt="photo-{i}"
+										class="object-cover object-center w-full h-full"
+									/>
+								{/if}
 							</button>
 						</div>
 					{/each}
 				</div>
 			</div>
 		{:else}
-			<div class="flex items-center justify-center lg:col-span-2 h-[calc(100vh-200px)]">
+			<div class="flex h-[calc(100vh-200px)] items-center justify-center lg:col-span-2">
 				<span class="loading loading-spinner loading-lg"></span>
 			</div>
 		{/if}
 	</div>
 </section>
 
-{#if selectedImage}
-	<button
+{#if selectedMedia}
+	<!-- svelte-ignore a11y-no-static-element-interactions -->
+	<div
 		class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-75 z-100"
-		on:click={closeModal}
 		on:keydown={(e) => e.key === 'Escape' && closeModal()}
 		tabindex="-1"
 	>
-		<div class="relative max-h-[90vh] max-w-4xl overflow-auto">
-			<img src={selectedImage} alt={selectedImage} class="w-full h-auto" />
+		<!-- svelte-ignore a11y-click-events-have-key-events -->
+		<!-- svelte-ignore a11y-no-static-element-interactions -->
+		<div
+			class="relative flex h-full max-h-[90vh] max-w-[90vw] items-center justify-center"
+			on:click={stopPropagation}
+		>
+			{#if isVideo(selectedMedia)}
+				<!-- svelte-ignore a11y-media-has-caption -->
+				<div class="relative inline-block">
+					<video src={selectedMedia} controls class="object-contain max-w-full max-h-screen">
+						Your browser does not support the video tag.
+					</video>
+					<button
+						class="absolute text-white bg-black btn btn-circle right-4 top-4"
+						on:click={closeModal}
+					>
+						<Icons.x />
+					</button>
+				</div>
+			{:else}
+				<div class="relative inline-block">
+					<img
+						src={selectedMedia}
+						alt={selectedMedia}
+						class="object-contain max-w-full max-h-screen"
+					/>
+					<button
+						class="absolute text-white bg-black btn btn-circle right-4 top-4"
+						on:click={closeModal}
+					>
+						<Icons.x />
+					</button>
+				</div>
+			{/if}
 		</div>
-	</button>
+	</div>
 {/if}
 
 <style>

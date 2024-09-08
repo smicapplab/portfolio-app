@@ -2,7 +2,10 @@ import { fail } from '@sveltejs/kit';
 import { superValidate } from 'sveltekit-superforms/server';
 import { zod } from 'sveltekit-superforms/adapters';
 import { guestBookSchema } from '$lib/schemas/contact';
-// import { SENDGRID_API_KEY } from '$env/static/private';
+import { Resend } from 'resend';
+import { RESEND_API_KEY } from '$env/static/private';
+
+const resend = new Resend(RESEND_API_KEY);
 
 export const actions = {
 	leaveMessage: async ({ request }) => {
@@ -16,32 +19,25 @@ export const actions = {
 			return fail(400, { form });
 		}
 
-		return {
-			form
-		};
+		try {
+			const { fullName, email, message } = form.data;
+			await resend.emails.send({
+				from: 'developer@koredorcapital.com',
+				to: 's.torrefranca@gmail.com',
+				subject: 'Portfolio Guestbook',
+				html: `
+				  <strong>From:</strong> ${fullName}<br/>
+				  <strong>Email:</strong> ${email}<br/>
+				  <p><strong>Message:</strong><br>${message.replace(/\n/g, '<br>')}</p>
+				`
+			});
 
-		// const { fullName, email, message } = form.data;
-
-		// sgMail.setApiKey(SENDGRID_API_KEY);
-		// const msg = {
-		// 	to: 's.torrefranca@gmail.com',
-		// 	from: 's.torrefranca@gmail.com', // Must be verified in SendGrid
-		// 	subject: 'Portfolio Guestbook',
-		// 	text: `
-		// 	From: ${fullName}
-		// 	Email: ${email}
-		// 	Message:
-		// 	${message}`
-		// };
-
-		// try {
-		// 	await sgMail.send(msg);
-		// 	return {
-		// 		form
-		// 	};
-		// } catch (error) {
-		// 	console.error(error);
-		// 	return fail(400, { form });
-		// }
+			return {
+				form
+			};
+		} catch (error) {
+			console.error(error);
+			return fail(400, { form });
+		}
 	}
 };
